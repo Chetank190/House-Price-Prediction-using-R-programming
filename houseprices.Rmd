@@ -1,0 +1,153 @@
+---
+title: "HousePrices"
+author: "Chetan"
+date: "23/02/2022"
+output: word_document
+---
+
+## Load Data
+
+```{r load data}
+# reading csv file
+data <- read.csv('./Table2.1HousePrices-NoID.csv')
+```
+## Question 1:  
+Write a function that takes SqFt and Brick (Yes or No) as inputs and returns the average price of all the houses which are less than or equal to the square feet and match the Brick type provided as arguments in the function. For example, if the function has 2000 and "No" as inputs, it should return the average of non-brick houses which are less than or equal to 2000 square feet in size.   
+
+## Answer 1:  
+
+```{r answer 1}
+avg_fun <- function(sqft, brick){
+        total<-0
+        avg <- 0
+        count<-0
+        # iterating each rows
+        for(i in 1:length(data$Price)){ 
+                # applying condition if match then
+                if(data$SqFt[i] <= sqft && data$Brick[i] == brick){ 
+                        # price will added to total
+                        total<- total + data$Price[i] 
+                        # counting number of entries
+                        count<- count + 1 
+                }
+        }
+        # calculating average
+        avg <- total / count 
+        avg <- round(avg, 2)
+        # now printing
+        print(paste("Average price is: ",avg)) 
+}
+
+# calling function
+avg_fun(2000,"No") 
+
+```
+
+## Question 2:
+Write another function which also takes "Neighborhood" as an input in addition to SqFt and Brick as in (1). 
+
+## Answer 2:
+
+```{r answer 2}
+avg_fun_hood <- function(sqft, brick, neighborhood){
+        total<-0
+        avg <- 0
+        count<-0
+        # iterating each rows
+        for(i in 1:length(data$Price)){ 
+                # applying condition if match then
+                if(data$SqFt[i] <= sqft && data$Brick[i] == brick && data$Neighborhood == neighborhood){ 
+                        # price will added to total
+                        total<- total + data$Price[i] 
+                        # counting number of entries
+                        count<- count + 1 
+                }
+        }
+        # calculating average
+        avg <- total / count 
+        avg <- round(avg, 2)
+        # printing
+        print(paste("Average price is: ",avg)) 
+}
+
+# calling function
+avg_fun_hood(2200,"No", "East") 
+
+```
+Question 3:
+Create a histogram of Price by changing the default values of several arguments of hist function. Your output should have proper title, axes labels and reasonable number of bins. 
+
+
+## Answer 3:
+
+```{r answer 3}
+# ploting histogram
+hist(data$Price, xlab="Price" , main="Histogram for Price", breaks = 5)
+
+```
+
+
+## Answer 4:
+
+
+```{r answer 4}
+avg_price_bedroom_using_for <- function(bedroom){
+        total<-0
+        avg <- 0
+        count<-0
+        # iterating each rows
+        for(i in 1:length(data$Price)){ 
+                # applying condition if match then
+                if(data$Bedrooms[i] == bedroom){ 
+                        # price will added to total
+                        total<- total + data$Price[i] 
+                        # counting number of entries
+                        count<- count + 1 
+                }
+        }
+        # calculating average
+        avg <- total / count 
+        # now printing
+        print(paste("Average price is: ",avg)) 
+}
+
+# calling function
+avg_price_bedroom_using_for(2) 
+
+
+
+```
+
+## Answer 5:
+
+
+```{r answer 5}
+avg_price_bedroom_using_while <- function(bedroom){
+        total<-0
+        avg <- 0
+        count<-0
+        # iterating each rows
+        i <- length(data$Price)
+        class(i)
+        # Using while loop to check the condition 
+        while(i >= 1){ 
+                # using if to check number of bedrooms
+                if(data$Bedrooms[i] == bedroom){ 
+                        # price will added to total
+                        total<- total + data$Price[i] 
+                        # counting number of entries
+                        count<- count + 1 
+                }
+                
+                i = i - 1
+                }
+        # calculating average
+        avg <- total / count 
+        # printing result
+        print(paste("Average price is: ",avg)) 
+}
+
+# calling function
+avg_price_bedroom_using_while(2) 
+
+```
